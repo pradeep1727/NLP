@@ -15,7 +15,6 @@ textblob
 xgboost
 sklearn
 spellcheck
-strings==0.1.2
 regex
 Flask-Bootstrap
 random-xe
