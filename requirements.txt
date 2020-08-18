@@ -15,10 +15,10 @@ textblob
 xgboost
 sklearn
 spellcheck
-string
-re
-flask_bootstrap
-random 
-time
-IPython
+strings
+regex
+Flask-Bootstrap
+random-xe
+times
+ipython
 joblib
