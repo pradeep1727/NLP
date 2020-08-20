@@ -14,7 +14,7 @@ sumy
 textblob
 xgboost
 sklearn
-spellcheck
+spellchecker
 regex
 Flask-Bootstrap
 random-xe
