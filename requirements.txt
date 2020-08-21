@@ -12,9 +12,7 @@ pandas>=0.19
 nltk>=3.4.5
 sumy
 textblob
-xgboost
 sklearn
-spellchecker
 regex
 Flask-Bootstrap
 random-xe
