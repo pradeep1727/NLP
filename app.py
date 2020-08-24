@@ -13,7 +13,6 @@ import nltk
 import string
 from textblob import TextBlob,Word
 import numpy as np
-from FinalCode import prediction
 from sumy.nlp.stemmers import Stemmer
 from sumy.utils import get_stop_words
 from sumy.nlp.tokenizers import Tokenizer as sumytoken
@@ -21,10 +20,23 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.summarizers.lsa import LsaSummarizer as Summarizer
 from flaskext.markdown import Markdown
 from textblob import TextBlob,Word
+import pickle
+from nltk import word_tokenize
+from nltk.corpus import wordnet
+from sklearn.metrics import f1_score
+from nltk.stem import WordNetLemmatizer
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 
 HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
 
-
+filename = 'nlp_model.pkl'
+clf = pickle.load(open(filename, 'rb'))
+cv=pickle.load(open('tranform.pkl','rb'))
 app = Flask(__name__)
 Markdown(app)
 #Bootstrap(app)
@@ -83,7 +95,8 @@ def analyse():
         blob_polarity = blob.sentiment.polarity
         blob_subjectivity = blob.sentiment.subjectivity
         summary = textsummary(rawtext, stemmer, LANGUAGE, SENTENCES_COUNT)
-        tag = prediction(rawtext)
+        vect = cv.transform(rawtext)
+        tag = clf.predict(vect)
         listToStr = ' '.join([str(elem) for elem in tag])
         listToStr = listToStr.replace("'", "")
         listToStr = re.sub(r'[.|)|(|\|/]',r' ',listToStr)
@@ -103,7 +116,8 @@ def data1():
             csvfile = csv.reader(file)
             for row in csvfile:
                 row = ' '.join([str(elem) for elem in row]) 
-                x =prediction(row)
+                y = cv.transform(row)
+                x =clf.predict(y)
                 df.append(x)
                 df1.append(row)
         df = pd.DataFrame(df)
