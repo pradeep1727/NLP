@@ -1,13 +1,14 @@
 from flask import Flask,render_template,url_for,request, send_file
 from flask_bootstrap import Bootstrap 
 from textblob import TextBlob,Word 
+import joblib
+from joblib import dump, load
 import csv
 from csv import writer
 import random 
 import time
 import pandas as pd 
 from IPython import get_ipython
-import joblib
 import re
 import nltk
 import string
@@ -33,10 +34,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 
 HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
-
-filename = 'nlp_model.pkl'
-clf = pickle.load(open(filename, 'rb'))
-cv=pickle.load(open('tranform.pkl','rb'))
+clf = load('nlp_model.joblib')
+cv=load('tranform.joblib')
 app = Flask(__name__)
 Markdown(app)
 #Bootstrap(app)
