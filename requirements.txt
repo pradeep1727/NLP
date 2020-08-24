@@ -20,3 +20,4 @@ times
 ipython
 joblib
 pickles
+Flask-Markdown
