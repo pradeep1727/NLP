@@ -34,8 +34,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 
 HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
-clf = load('nlp_model.joblib')
-cv=load('tranform.joblib')
+filename = 'nlp_model.pkl'
+clf = pickle.load(open(filename, 'rb'))
+cv=pickle.load(open('tranform.pkl','rb'))
 app = Flask(__name__)
 Markdown(app)
 #Bootstrap(app)
